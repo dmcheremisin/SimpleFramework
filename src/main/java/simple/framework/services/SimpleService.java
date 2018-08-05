@@ -8,6 +8,7 @@ public class SimpleService {
     @Init
     void initService(){
         System.out.println("Hi! Simple Service is loaded");
+        throw new RuntimeException("something went wrong in initService");
     }
 
     String getName() {

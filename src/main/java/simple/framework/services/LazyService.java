@@ -6,9 +6,10 @@ import simple.framework.annotations.Service;
 @Service(name = "Very-very lazy service", lazyLoad = true)
 public class LazyService {
 
-    @Init
+    @Init(suppressException = true)
     void lazyInit() throws Exception {
         System.out.println("I'm initing extra lazily....");
+        throw new RuntimeException("something went wrong in lazyInit");
     }
 
     void printInfo() {
