@@ -5,7 +5,8 @@ import simple.framework.annotations.Service;
 
 @Service(name = "Super simple service")
 public class SimpleService {
-    @Init
+
+    @Init(suppressException = true)
     void initService(){
         System.out.println("Hi! Simple Service is loaded");
         throw new RuntimeException("something went wrong in initService");
