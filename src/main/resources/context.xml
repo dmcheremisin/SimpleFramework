@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
     <bean name="lazyService" class="simple.framework.services.LazyService" />
-    <bean name="simpleService" class="simple.framework.services.SimpleService" />
+    <bean name="simpleService" class="simple.framework.services.SimpleService">
+        <arg ref="lazyService"/>
+    </bean>
 </beans>

@@ -24,22 +24,20 @@ public class ApplicationProcessor {
                     for (Method method : aClass.getDeclaredMethods()) {
                         if(method.isAnnotationPresent(Init.class)) {
                             method.setAccessible(true);
-                            boolean lazyLoad = aClass.getAnnotation(Service.class).lazyLoad();
-                            if(lazyLoad) {
-                                new Thread(() -> {
-                                    try {
-                                        method.invoke(object);
-                                    } catch (IllegalAccessException | InvocationTargetException e) {
-                                        e.printStackTrace();
-                                    }
-                                }).start();
-                            } else {
-                                invokeInternal(object, method);
-                            }
+                            initNormalOrLazy(object, aClass, method);
                         }
                     }
                 }
         );
+    }
+
+    private static void initNormalOrLazy(Object object, Class<?> aClass, Method method) {
+        boolean lazyLoad = aClass.getAnnotation(Service.class).lazyLoad();
+        if(lazyLoad) {
+            new Thread(() -> invokeInternal(object, method)).start();
+        } else {
+            invokeInternal(object, method);
+        }
     }
 
     private static void invokeInternal(Object object, Method method) {
