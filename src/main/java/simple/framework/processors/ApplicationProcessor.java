@@ -3,22 +3,21 @@ package simple.framework.processors;
 import simple.framework.annotations.Init;
 import simple.framework.annotations.Service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
 
 public class ApplicationProcessor {
-    static Map<String, Object> classes;
+    public static Map<String, Object> context;
 
     public static void main(String[] args) {
         ConfigurationProcessor configurationProcessor = new ConfigurationProcessor();
-        classes = configurationProcessor.getContext();
+        context = configurationProcessor.getContext();
         initMethods();
     }
 
     public static void initMethods(){
-        classes.values().forEach(
+        context.values().forEach(
                 object -> {
                     Class<?> aClass = object.getClass();
                     for (Method method : aClass.getDeclaredMethods()) {
