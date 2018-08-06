@@ -31,7 +31,7 @@ public class ConfigurationProcessor {
             this.processConfiguration();
             this.loadConfigurationContext();
         } catch (Exception e) {
-            System.out.println("Something went wrong with ConfigurationProcessor creation");
+            System.err.println("Something went wrong with ConfigurationProcessor creation");
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -44,7 +44,6 @@ public class ConfigurationProcessor {
                     String name = reader.getAttributeValue(null, NAME);
                     String clazz = reader.getAttributeValue(null, CLASS);
                     Tupple<String, String> tupple = new Tupple<>(name, clazz);
-                    System.out.println("tupple: " + tupple);
                     List<String> args = new ArrayList<>();
                     while (reader.hasNext()) {
                         int internalEvent = reader.next();
@@ -55,12 +54,11 @@ public class ConfigurationProcessor {
                             break;
                         }
                     }
-                    System.out.println("args " + args);
                     configuration.put(tupple, args);
                 }
             }
         } catch (XMLStreamException e) {
-            System.out.println("Something went wrong with xml processing");
+            System.err.println("Something went wrong with xml processing");
             throw new RuntimeException(e.getMessage());
         }
     }
